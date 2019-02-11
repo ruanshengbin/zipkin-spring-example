@@ -3,10 +3,10 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.ruan.axc</groupId>
-	<artifactId>spring-zipkin-example</artifactId>
+	<artifactId>zipkin-spring-example</artifactId>
 	<packaging>jar</packaging>
 
-	<name>spring-zipkin-example</name>
+	<name>zipkin-spring-example</name>
 	<description>Example using Spring Seluth from Spring Boot 1.5.9.RELEASE</description>
 
 	<parent>
