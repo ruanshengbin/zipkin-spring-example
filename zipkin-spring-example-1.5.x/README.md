@@ -45,16 +45,16 @@ mvn clean package
 web前端和后端在同一个进程
 
 ```
-java -jar spring-zipkin-example-1.5.9.RELEASE.jar --server.port=8888 --spring.application.name=zipkin-test --spring.zipkin.baseUrl=http://127.0.0.1:9411/ --backend.url=http://127.0.0.1:8888
+java -jar zipkin-spring-example-1.5.9.RELEASE.jar --server.port=8888 --spring.application.name=zipkin-test --spring.zipkin.baseUrl=http://127.0.0.1:9411/ --backend.url=http://127.0.0.1:8888
 ```
 
 ### 多进程启动
 web前端和后端分别对应一个进程，可以模拟多进程的调用
 
 ```
-java -jar spring-zipkin-example-1.5.9.RELEASE.jar --server.port=8888 --spring.application.name=zipkin-test-front --spring.zipkin.baseUrl=http://127.0.0.1:9411/ --backend.url=http://127.0.0.1:8889
+java -jar zipkin-spring-example-1.5.9.RELEASE.jar --server.port=8888 --spring.application.name=zipkin-test-front --spring.zipkin.baseUrl=http://127.0.0.1:9411/ --backend.url=http://127.0.0.1:8889
 
-java -jar spring-zipkin-example-1.5.9.RELEASE.jar --server.port=8889 --spring.application.name=zipkin-test-backend  --spring.zipkin.baseUrl=http://127.0.0.1:9411/ --backend.url=http://127.0.0.1:8889
+java -jar zipkin-spring-example-1.5.9.RELEASE.jar --server.port=8889 --spring.application.name=zipkin-test-backend  --spring.zipkin.baseUrl=http://127.0.0.1:9411/ --backend.url=http://127.0.0.1:8889
 ```
 
 ## 服务调用示例
