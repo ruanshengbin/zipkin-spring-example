@@ -34,6 +34,12 @@ sleuth依赖
 ## 启动zipkin
 [详细介绍参考zipkin官网](https://zipkin.io/pages/quickstart.html)
 
+使用kafka进行数据上报需要注意kafka的版本，zipkin-server-2.11.x使用的kafka-client是2.x版本的
+
+kafka Broker 0.10.2+对kafka-clients兼容性较好（[详细兼容信息参考](https://cwiki.apache.org/confluence/display/KAFKA/Compatibility+Matrix)），kafka Broker建议升级到0.10.2+
+
+kafka-clients 0.11.0.0+版本之上的kafka-clients的消息可以互通，client建议升级到0.11.0.0+
+
 ## 打包
 ```
 mvn clean package
@@ -45,16 +51,16 @@ mvn clean package
 web前端和后端在同一个进程
 
 ```
-java -jar zipkin-spring-example-1.5.9.RELEASE.jar --server.port=8888 --spring.application.name=zipkin-test --spring.zipkin.baseUrl=http://127.0.0.1:9411/ --backend.url=http://127.0.0.1:8888
+java -jar spring-zipkin-example-1.5.9.RELEASE.jar --server.port=8888 --spring.application.name=zipkin-test --spring.zipkin.baseUrl=http://127.0.0.1:9411/ --backend.url=http://127.0.0.1:8888
 ```
 
 ### 多进程启动
 web前端和后端分别对应一个进程，可以模拟多进程的调用
 
 ```
-java -jar zipkin-spring-example-1.5.9.RELEASE.jar --server.port=8888 --spring.application.name=zipkin-test-front --spring.zipkin.baseUrl=http://127.0.0.1:9411/ --backend.url=http://127.0.0.1:8889
+java -jar spring-zipkin-example-1.5.9.RELEASE.jar --server.port=8888 --spring.application.name=zipkin-test-front --spring.zipkin.baseUrl=http://127.0.0.1:9411/ --backend.url=http://127.0.0.1:8889
 
-java -jar zipkin-spring-example-1.5.9.RELEASE.jar --server.port=8889 --spring.application.name=zipkin-test-backend  --spring.zipkin.baseUrl=http://127.0.0.1:9411/ --backend.url=http://127.0.0.1:8889
+java -jar spring-zipkin-example-1.5.9.RELEASE.jar --server.port=8889 --spring.application.name=zipkin-test-backend  --spring.zipkin.baseUrl=http://127.0.0.1:9411/ --backend.url=http://127.0.0.1:8889
 ```
 
 ## 服务调用示例
