@@ -31,8 +31,8 @@ sleuth依赖
 -- backend.url：web服务后端地址
 
 # 运行
-## 启动zipkin
-[详细介绍参考zipkin官网](https://zipkin.io/pages/quickstart.html)
+## 启动zipkin server
+[详细介绍参考zipkin server文档](https://github.com/openzipkin/zipkin/blob/master/zipkin-server/README.md)
 
 使用kafka进行数据上报需要注意kafka的版本，zipkin-server-2.11.x使用的kafka-client是2.x版本的
 
