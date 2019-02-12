@@ -80,12 +80,23 @@ hi ruan: Mon Feb 11 22:14:30 CST 2019
 
 ### rest接口调用处理流程
 
-```graph
-graph TD;
-    Frontend:callBackend-->Frontend:frontCustomNewSpan;
-    Frontend:frontCustomNewSpan-->Frontend:random-sleep;
-    Frontend:random-sleep-->Frontend:random-throw-exception;
-    Frontend:random-throw-exception-->Backend:printDate;
-    Backend:printDate-->Backend:random-sleep;
+```
+        Frontend:callBackend
+                 ||
+                \||/
+                 \/
+     Frontend:frontCustomNewSpan
+                 ||
+                \||/
+                 \/
+        Frontend:random-sleep
+                 ||
+                \||/
+                 \/
+   Frontend:random-throw-exception
+                 ||
+                \||/
+                 \/
+        Backend:random-sleep
 ```
 
