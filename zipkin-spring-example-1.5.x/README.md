@@ -30,6 +30,49 @@ sleuth依赖
 - spring.zipkin.baseUrl：zipkin服务端地址
 -- backend.url：web服务后端地址
 
+# 自定义Span使用
+如果没有用sleuth提供的已经实现的拦截器（webmvc、Schedule等）就需要自己来管理Span进行指标收集，以下示例的tracer（org.springframework.cloud.sleuth.Tracer）可以使用注解引入
+[详细介绍参考sleuth文档](https://cloud.spring.io/spring-cloud-static/spring-cloud-sleuth/1.3.2.RELEASE/single/spring-cloud-sleuth.html#creating-and-closing-spans)
+```java
+Span newSpan = this.tracer.createSpan("calculateTax");
+try {
+	// ...
+	// You can tag a span
+	this.tracer.addTag("taxValue", taxValue);
+	// ...
+	// You can log an event on a span
+	newSpan.logEvent("taxCalculated");
+} finally {
+	// Once done remember to close the span. This will allow collecting
+	// the span to send it to Zipkin
+	this.tracer.close(newSpan);
+}
+
+
+The continued instance of span is equal to the one that it continues:
+
+Span continuedSpan = this.tracer.continueSpan(spanToContinue);
+assertThat(continuedSpan).isEqualTo(spanToContinue);
+
+To continue a span you can use the Tracer interface.
+
+// let's assume that we're in a thread Y and we've received
+// the `initialSpan` from thread X
+Span continuedSpan = this.tracer.continueSpan(initialSpan);
+try {
+	// ...
+	// You can tag a span
+	this.tracer.addTag("taxValue", taxValue);
+	// ...
+	// You can log an event on a span
+	continuedSpan.logEvent("taxCalculated");
+} finally {
+	// Once done remember to detach the span. That way you'll
+	// safely remove it from the current thread without closing it
+	this.tracer.detach(continuedSpan);
+}
+```
+
 # 运行
 ## 启动zipkin server
 [详细介绍参考zipkin server文档](https://github.com/openzipkin/zipkin/blob/master/zipkin-server/README.md)
