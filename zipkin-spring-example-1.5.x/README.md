@@ -32,6 +32,7 @@ sleuth依赖
 
 # 自定义Span使用
 如果没有用sleuth提供的已经实现的拦截器（webmvc、Schedule等）就需要自己来管理Span进行指标收集，以下示例的tracer（org.springframework.cloud.sleuth.Tracer）可以使用注解引入
+
 [详细介绍参考sleuth文档](https://cloud.spring.io/spring-cloud-static/spring-cloud-sleuth/1.3.2.RELEASE/single/spring-cloud-sleuth.html#creating-and-closing-spans)
 ```java
 Span newSpan = this.tracer.createSpan("calculateTax");
