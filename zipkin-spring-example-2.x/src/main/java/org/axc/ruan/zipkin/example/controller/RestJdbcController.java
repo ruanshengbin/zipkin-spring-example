@@ -47,7 +47,7 @@ public class RestJdbcController {
 
         zipkinNewSpan();
 
-        return String.format("hi %s: %s, mysql return：%s", name, new Date().toString(), JSON.toJSONString(list));
+        return String.format("hi %s: %s!\r\n mysql return：%s", name, new Date().toString(), JSON.toJSONString(list));
     }
 
     private void zipkinNewSpan() {

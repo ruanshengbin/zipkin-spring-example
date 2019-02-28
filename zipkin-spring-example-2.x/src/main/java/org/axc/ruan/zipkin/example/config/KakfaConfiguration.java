@@ -1,6 +1,7 @@
 package org.axc.ruan.zipkin.example.config;
 
 import java.util.Map;
+import java.util.Properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +11,8 @@ import org.springframework.context.annotation.Configuration;
 public class KakfaConfiguration {
 
     private Map<String, Object> producer;
+
+    private Properties streams;
 
     private Map<String, Object> consumer;
 
@@ -21,6 +24,14 @@ public class KakfaConfiguration {
         this.producer = producer;
     }
 
+    public Properties getStreams() {
+        return streams;
+    }
+
+    public void setStreams(Properties streams) {
+        this.streams = streams;
+    }
+
     public Map<String, Object> getConsumer() {
         return consumer;
     }
@@ -28,6 +39,5 @@ public class KakfaConfiguration {
     public void setConsumer(Map<String, Object> consumer) {
         this.consumer = consumer;
     }
-
 
 }
