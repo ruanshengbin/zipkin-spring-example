@@ -24,7 +24,7 @@ import brave.Tracing;
  */
 @RestController
 @RequestMapping("/zipkin")
-public class RestKafkaConnectController {
+public class RestKafkaController {
 
     @Autowired
     private KafkaService kafkaSrv;
