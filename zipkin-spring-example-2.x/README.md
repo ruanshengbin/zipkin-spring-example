@@ -39,7 +39,7 @@ sleuth依赖
 
 ## jdbc服务跟踪
 
-服务跟踪消息拦截：需要注意mysql-connector-java的版本，对应的拦截器版本是不一样的
+服务跟踪消息拦截：需要注意mysql-connector-java的版本，对应的拦截器版本是不一样的，jdbc的url需要添加url参数queryInterceptors=brave.mysql8.TracingQueryInterceptor&exceptionInterceptors=brave.mysql8.TracingExceptionInterceptor，[详细说明参考](https://github.com/openzipkin/brave/tree/release-5.6.1/instrumentation/mysql8)
 ```
 <dependency>
     <groupId>io.zipkin.brave</groupId>
