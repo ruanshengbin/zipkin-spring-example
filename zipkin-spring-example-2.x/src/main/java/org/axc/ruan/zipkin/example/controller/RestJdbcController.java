@@ -38,9 +38,9 @@ public class RestJdbcController {
     private Tracing tracing;
 
     @GetMapping("/jdbc/{name}")
-    public String test(@PathVariable("name") final String name) {
+    public String test(@PathVariable("name") final String name) throws Exception {
         tracing.tracer().currentSpan().tag("tracker_id", name);
-        zipkinTestUtil.randomThrowException(0.3F, "RestJdbcController");
+        zipkinTestUtil.randomThrowExceptionWithSpan(0.3F, "RestJdbcController");
 
         String sql = "SELECT Host, User FROM user";
         List<Map<String, Object>> list = jdbcTemplate.queryForList(sql);
@@ -50,11 +50,12 @@ public class RestJdbcController {
         return String.format("hi %s: %s!\r\n mysql return：%s", name, new Date().toString(), JSON.toJSONString(list));
     }
 
-    private void zipkinNewSpan() {
-        Span span = tracing.tracer().nextSpan().name("restJdbcTestNewSpan").start();
+    private void zipkinNewSpan() throws Exception {
+        Span span = tracing.tracer().nextSpan().name("zipkinNewSpan").start();
         try (Tracer.SpanInScope ws = tracing.tracer().withSpanInScope(span)) {
-            zipkinTestUtil.randomSleep(2);
+            span.annotate("zipkinNewSpan start");
             zipkinContinueSpan();
+            span.annotate("zipkinNewSpan finish");
         } catch (Exception e) {
             span.error(e);
             throw e;
@@ -63,10 +64,12 @@ public class RestJdbcController {
         }
     }
 
-    private void zipkinContinueSpan() {
-        Span span = tracing.tracer().nextSpan().name("restJdbcTestContinueSpan").start();
-        try (Tracer.SpanInScope ws = tracing.tracer().withSpanInScope(span)) {
-            zipkinTestUtil.randomThrowException(0.4F, "zipkinContinueSpan");;
+    private void zipkinContinueSpan() throws Exception {
+        Span span = tracing.tracer().joinSpan(tracing.currentTraceContext().get());
+        try {
+            span.annotate("zipkinContinueSpan start");
+            zipkinTestUtil.randomSleepNoSpan(1);
+            span.annotate("zipkinContinueSpan finish");
         } catch (Exception e) {
             span.error(e);
             throw e;
