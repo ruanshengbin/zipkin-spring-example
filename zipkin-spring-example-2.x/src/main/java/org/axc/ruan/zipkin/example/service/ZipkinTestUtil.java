@@ -4,20 +4,29 @@ public interface ZipkinTestUtil {
 
     /**
      * 按照指定概率随机抛出异常，比如percentage=0.5就会有50%的概率抛出异常
-     * @Title: randomThrowException
+     * @Title: randomThrowExceptionWithSpan
      * @param percentage
      * @param desc
      * @return: void
      */
-    void randomThrowException(float percentage, String desc);
+    void randomThrowExceptionWithSpan(float percentage, String desc);
+
+    /**
+     * 随机休眠0-second秒：会新建一个span
+     * @Title: randomSleepWithSpan
+     * @param maxSecond
+     * @return: void
+     */
+    void randomSleepWithSpan(int maxSecond);
 
     /**
      * 随机休眠0-second秒
-     * @Title: randomSleep
+     * @Title: randomSleepWithSpan
      * @param second
      * @return: void
+     * @throws InterruptedException 
      */
-    void randomSleep(int second);
+    void randomSleepNoSpan(int maxSecond) throws InterruptedException;
 
     /**
      * spring schedule example 定时一分钟调用一次随机随机休眠0-1秒

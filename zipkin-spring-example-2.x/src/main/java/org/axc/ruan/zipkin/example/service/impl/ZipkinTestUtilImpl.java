@@ -22,12 +22,11 @@ public class ZipkinTestUtilImpl implements ZipkinTestUtil {
 
     @Override
     @NewSpan// 注解的方式使用span，需要放到spring bean容器托管
-    public void randomSleep(int maxSecond) {
+    public void randomSleepWithSpan(int maxSecond) {
         try {
             tracer.currentSpan().annotate("random sleep start");
             tracer.currentSpan().tag("sleep_second", "" + maxSecond);
-            int millis = this.random.nextInt(maxSecond * 1000);
-            Thread.sleep(millis);
+            randomSleepNoSpan(maxSecond);
         } catch (Exception e) {
             //
         } finally {
@@ -36,8 +35,14 @@ public class ZipkinTestUtilImpl implements ZipkinTestUtil {
     }
 
     @Override
+    public void randomSleepNoSpan(int maxSecond) throws InterruptedException {
+        int millis = this.random.nextInt(maxSecond * 1000);
+        Thread.sleep(millis);
+    }
+
+    @Override
     @NewSpan
-    public void randomThrowException(float percentage, String desc) {
+    public void randomThrowExceptionWithSpan(float percentage, String desc) {
         try {
             tracer.currentSpan().annotate("random throw exception start");
             int n = new Random().nextInt(SEED);

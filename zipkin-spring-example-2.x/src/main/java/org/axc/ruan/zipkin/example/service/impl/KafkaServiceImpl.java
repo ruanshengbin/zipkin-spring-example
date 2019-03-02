@@ -139,7 +139,7 @@ public class KafkaServiceImpl implements KafkaService {
                         Span span = kafkaTracing.nextSpan(record).name("consumer-process-message").start();
                         try (Tracer.SpanInScope ws = tracing.tracer().withSpanInScope(span)) {
                             tracing.tracer().currentSpan().annotate("kafka consumer start");
-                            zipkinTestUtil.randomSleep(2);
+                            zipkinTestUtil.randomSleepWithSpan(2);
                             tracing.tracer().currentSpan().annotate("kafka consumer finish");
                         } catch (Exception e) {
                             span.error(e);
@@ -219,7 +219,7 @@ public class KafkaServiceImpl implements KafkaService {
                 System.out.println(String.format("StreamProcessorChild recevice message: topic= %s, messages=%s",
                         context.topic(), data));
                 data = String.format("%s=>%s", data, endTopic);
-                zipkinTestUtil.randomSleep(2);
+                zipkinTestUtil.randomSleepWithSpan(2);
                 context.forward(key, data, To.child("SINK-END"));
                 System.out.println(String.format("StreamProcessorChild forward message: next topic= %s, messages=%s",
                         endTopic, data));
